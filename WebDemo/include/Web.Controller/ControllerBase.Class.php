@@ -20,7 +20,14 @@ abstract class ControllerBase implements IController
     public $CheckLogin = true;
     public $UserInfo = null;
 
+    /**
+     * @var int 一般用于存放ID
+     */
     public $id;
+
+    /**
+     * @var int 一般用于存放ID
+     */
     public $topid;
 
     public $list = [];

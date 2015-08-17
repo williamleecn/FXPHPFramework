@@ -30,8 +30,25 @@ class LoginController extends ControllerBase
         $this->data = 'time=>' . StringUtitly::FormatTimestamp(time());
     }
 
+
     public function doLogin()
     {
+
+        /*
+                DB::InsertDataFromArray('dmo_user', [
+                    'name' => 'test',
+                    'psw' => md5('test')
+                ]);
+
+                DB::UpdateDataFromArray('dmo_user', [
+                    'name' => 'test',
+                    'psw' => md5('test')
+                ],"WHERE id=1");
+
+        */
+
+
+        DB::Update("DELETE FROM dmo_user WHERE id=111");
 
 
         $name = $this->Request->TryGetString('name');//I('name');  $_REQUEST['name']

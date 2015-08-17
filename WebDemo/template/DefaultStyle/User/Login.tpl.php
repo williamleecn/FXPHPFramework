@@ -13,7 +13,9 @@ psw:<input name="psw">
 
 -------------------<BR>
 <?php
-WebRouter::$Context->
-WebRouter::$Context->All
-
+foreach(WebRouter::$Context->AllUser as $itm){
+?>
+    <?php echo $itm['id']?>:<?php echo $itm['name']?><BR>
+<?php
+}
 ?>
