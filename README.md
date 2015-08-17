@@ -1,6 +1,7 @@
 # FXPHPFramework
 
 目录下
+
 data 目录:配置文件及日志文件存放目录
     Framework.Config.php 配置文件
     Log 日志文件
