@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-namespace Web\Utils;
+namespace Web\Wechat;
 
 final class MPXML
 {

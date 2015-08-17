@@ -1,6 +1,6 @@
 <?php
 
-namespace Web\Utils;
+namespace Web\Wechat;
 
 /*
 使用方法：
