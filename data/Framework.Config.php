@@ -10,7 +10,7 @@ final class Config
     public static $cfg_dbhost = '127.0.0.1';
     public static $cfg_dbname = 'fxdemo';
     public static $cfg_dbuser = 'root';
-    public static $cfg_dbpwd = '';
+    public static $cfg_dbpwd = '15000261127';
     public static $cfg_dbprefix = 'fxd_';
     public static $cfg_db_language = 'utf8';
     public static $cfg_templateStyle = 'DefaultStyle';

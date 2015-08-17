@@ -14,34 +14,39 @@ use Web\Utils\StringUtitly;
 
 class LoginController extends ControllerBase
 {
+
+    public $AllUser;
+
     public function Initialize()
     {
         $this->CheckLogin = false;
         parent::Initialize();
     }
 
-
     public function Execute()
     {
-        $this->data = StringUtitly::FormatTimestamp(time());
+        $this->AllUser = DB::GetAllData("SELECT id,name,psw FROM dmo_user ");
+
+        $this->data = 'time=>' . StringUtitly::FormatTimestamp(time());
     }
 
     public function doLogin()
     {
 
-        $name = $this->Request->TryGetString('name');
+
+        $name = $this->Request->TryGetString('name');//I('name');  $_REQUEST['name']
+
         $psw = $this->Request->TryGetString('psw');
 
         if (StringUtitly::IsEmptyOrBlank($name)) {
             $this->JSONAlert(110, 'name is empty');
-
         }
 
         if (StringUtitly::IsEmptyOrBlank($psw)) {
             $this->JSONAlert(111, 'psw is empty');
         }
 
-        $name = DB::Esc($name);
+        $name = DB::Esc($name);//转义
 
         $one = DB::GetOne("SELECT id,name,psw FROM dmo_user WHERE name='$name'");
 
@@ -58,4 +63,4 @@ class LoginController extends ControllerBase
     }
 
 
-} 
+}

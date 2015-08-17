@@ -6,7 +6,7 @@
  * Time: 12:27
  */
 
-namespace Webs\Utils;
+namespace Webs\Email;
 
 /**
  * PHPMailer - PHP email creation and transport class.

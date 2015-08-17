@@ -67,6 +67,12 @@ abstract class Router
         return Core::$WebRoot . DIRECTORY_SEPARATOR . "template" . DIRECTORY_SEPARATOR . self::$TemplateStyle . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $class . ".tpl.php";
     }
 
+
+    public static function  ChangeTemplatePath($name, $class)
+    {
+        self::$TemplatePath = ParseTemplatePath($name, $class);
+    }
+
     public static function  GetControllerClass($name, $class)
     {
 

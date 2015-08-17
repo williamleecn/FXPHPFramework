@@ -6,7 +6,7 @@
  * Time: 1:24
  */
 
-namespace Webs\Utils;
+namespace Webs\Email;
 
 /**
  * PHPMailer RFC821 SMTP email transport class.

@@ -31,6 +31,9 @@ final class Core
 
         spl_autoload_register('Web\Framework\Core::AutoLoader');
 
+        // TODO register_shutdown_function
+        // TODO set_exception_handler
+
     }
 
 

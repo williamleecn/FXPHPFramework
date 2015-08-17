@@ -2,7 +2,7 @@
 require_once(__DIR__ . "/../data/Framework.Config.php");
 require_once(__DIR__ . '/../include/Web.Framework/Core.Class.php');
 
-Web\Framework\Core::InitFramework(__DIR__);
+Web\Framework\Core::InitFramework(__DIR__);//初使化框架
 
 /**
  * Created by PhpStorm.
@@ -12,6 +12,11 @@ Web\Framework\Core::InitFramework(__DIR__);
  */
 final class WebRouter extends \Web\Framework\Router
 {
+    /**
+     * 网站名称
+     */
+    const WebName = 'WXDemo';
+
     /**
      * @var \Web\Controller\ControllerBase
      */
@@ -23,12 +28,12 @@ final class WebRouter extends \Web\Framework\Router
 
         try {
 
-            self::$ControllerInfo = parent::ParseController();
+            self::$ControllerInfo = parent::ParseController('/^\/([a-zA-Z0-9_]+)\/([a-zA-Z0-9]+)$/');
 
             if (empty(self::$ControllerInfo['name'])
                 || empty(self::$ControllerInfo['class'])
             ) {
-                \Web\Utils\WebUtils::JSAlert('错误的调用', \Web\Utils\WebUtils::REDIRECT_NO_REDIRECT);
+                \Web\Utils\WebUtils::JSAlert('错误的调用', \Web\Utils\WebUtils::REDIRECT_NO_REDIRECT);//TODO 友好提示
             }
 
             $name = self::$ControllerInfo['name'];
@@ -37,14 +42,14 @@ final class WebRouter extends \Web\Framework\Router
             $ControllerClass = self::GetControllerClass($name, $class);
 
             if ($ControllerClass === false) {
-                \Web\Utils\WebUtils::JSAlert('不存在处理方法', \Web\Utils\WebUtils::REDIRECT_NO_REDIRECT);
+                \Web\Utils\WebUtils::JSAlert('不存在处理方法', \Web\Utils\WebUtils::REDIRECT_NO_REDIRECT);//TODO 友好提示
                 self::ResponseEnd();
             }
 
 
             self::$Context = new $ControllerClass();
 
-            self::$Context->Initialize($name, $class);
+            self::$Context->Initialize();
 
             self::$TemplatePath = self::ParseTemplatePath($name, $class);
 
