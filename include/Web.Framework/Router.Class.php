@@ -30,11 +30,11 @@ abstract class Router
 
     public static function DoAction()
     {
-        parent::Initialize();
+        self::Initialize();
 
         try {
 
-            self::$ControllerInfo = parent::ParseController('/^\/([a-zA-Z0-9_]+)\/([a-zA-Z0-9]+)$/');
+            self::$ControllerInfo = self::ParseController('/^\/([a-zA-Z0-9_]+)\/([a-zA-Z0-9]+)$/');
 
             if (empty(self::$ControllerInfo['name'])
                 || empty(self::$ControllerInfo['class'])
