@@ -6,10 +6,9 @@ Please Read Wiki
 
 
 Config:
-	copy Framework.Config.Demo.php to Framework.Config.php, and config the new file.
 
+    copy Framework.Config.Demo.php to Framework.Config.php, and config the new file.
 
-    /data  Config & Log Folder
 
 Folders Info:
 
