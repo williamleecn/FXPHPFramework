@@ -1,26 +1,22 @@
 <?php
-require_once(__DIR__ . "/../data/Framework.Config.php");
-require_once(__DIR__ . '/../include/Web.Framework/Core.Class.php');
+use Web\Framework\RouterImpl;
 
-Web\Framework\Core::InitFramework(__DIR__);//初使化框架
+require(__DIR__ . '/../data/ConfigBase.Config.php');
+require(__DIR__ . '/../data/Framework.Config.php');
+require(__DIR__ . '/../FrameworkInclude/Web.Framework/CoreBase.Class.php');
+require(__DIR__ . '/include/Web.Framework/Core.Class.php');
 
-/**
- * Created by PhpStorm.
- * User: William
- * Date: 2015/1/20
- * Time: 15:06
- */
-final class WebRouter extends \Web\Framework\Router
+Web\Framework\Core::InitFramework(__DIR__);
+
+final class WebRouter extends RouterImpl
 {
     /**
-     * 网站名称
+     * Web Name
      */
-    const WebName = 'WXDemo';
+    const WebName = 'WebAdmin';
 
-    /**
-     * @var \Web\Controller\ControllerBase
-     */
-    public static $Context;
 }
+
+WebRouter::$DefaultHome = WebRouter::GetControllerPath('User', 'Login');
 
 WebRouter::DoAction();

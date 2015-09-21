@@ -11,6 +11,7 @@ namespace Web\Controller\User;
 use Web\Controller\ControllerBase;
 use Web\Utils\DB;
 use Web\Utils\StringUtitly;
+use Web\Utils\WebUtils;
 
 class LoginController extends ControllerBase
 {
@@ -25,47 +26,25 @@ class LoginController extends ControllerBase
 
     public function Execute()
     {
-        $this->AllUser = DB::GetAllData("SELECT id,name,psw FROM dmo_user ");
-
-        $this->data = 'time=>' . StringUtitly::FormatTimestamp(time());
+        $this->data = sprintf("服务时间: %s,当前IP为: %s", StringUtitly::FormatTimestamp(time()), WebUtils::GetIP());
     }
 
 
     public function doLogin()
     {
 
-        /*
-                DB::InsertDataFromArray('dmo_user', [
-                    'name' => 'test',
-                    'psw' => md5('test')
-                ]);
+        $name = $this->GetRequiredString('name', 110, 'name is empty');
 
-                DB::UpdateDataFromArray('dmo_user', [
-                    'name' => 'test',
-                    'psw' => md5('test')
-                ],"WHERE id=1");
+        $psw = $this->GetRequiredString('psw', 111, 'psw is empty');
 
-        */
+        //写法1
+        $one = DB::GetOneFromArray("dmo_user", ['name' => $name]);
+        //
 
-
-        DB::Update("DELETE FROM dmo_user WHERE id=111");
-
-
-        $name = $this->Request->TryGetString('name');//I('name');  $_REQUEST['name']
-
-        $psw = $this->Request->TryGetString('psw');
-
-        if (StringUtitly::IsEmptyOrBlank($name)) {
-            $this->JSONAlert(110, 'name is empty');
-        }
-
-        if (StringUtitly::IsEmptyOrBlank($psw)) {
-            $this->JSONAlert(111, 'psw is empty');
-        }
-
+        //写法2
         $name = DB::Esc($name);//转义
-
         $one = DB::GetOne("SELECT id,name,psw FROM dmo_user WHERE name='$name'");
+        //
 
         if (empty($one)) {
             $this->JSONAlert(112, 'user name not exist or psw incorrect');
@@ -75,8 +54,10 @@ class LoginController extends ControllerBase
             $this->JSONAlert(112, 'user name not exist or psw incorrect');
         }
 
+        $this->UserInfo = $one;
+        $this->SavekSession();
 
-        $this->JSONAlert(0, 'ok', ['Redirect' => 'User.Index']);
+        $this->JSONAlert(0, 'ok', ['Redirect' => \WebRouter::GetControllerPath('User','Index')]);
     }
 
 

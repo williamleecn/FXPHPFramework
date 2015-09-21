@@ -10,42 +10,16 @@
 namespace Web\Controller;
 
 use Web\Framework\Core;
-use Web\Framework\IController;
-use Web\Utils\WebUtils;
 use Web\Utils\XRequest;
 
-abstract class ControllerBase implements IController
+abstract class ControllerBase extends \Web\Framework\ControllerBase
 {
-    public $ShowTemplate = true;
     public $CheckLogin = true;
     public $UserInfo = null;
 
-    /**
-     * @var int 一般用于存放ID
-     */
-    public $id;
-
-    /**
-     * @var int 一般用于存放ID
-     */
-    public $topid;
-
-    public $list = [];
-    public $data;
-
-    public $nav;
-    public $listNav;
 
     const SESSION = 'PHP_SESSION';
 
-    public $CurrMenu = '';
-
-    public $Title = '';
-
-    /**
-     * @var XRequest
-     */
-    public $Request;
 
     public function Initialize()
     {
@@ -55,8 +29,8 @@ abstract class ControllerBase implements IController
 
         $this->Request = new XRequest($_REQUEST);
 
-
-        $this->CurrMenu = \WebRouter::$ControllerInfo['name'] . '.' . \WebRouter::$ControllerInfo['class'];
+        $this->CategoryName = \WebRouter::$ControllerInfo['category'];
+        $this->ControllerName = \WebRouter::$ControllerInfo['controller'];
 
         if ($this->CheckLogin) $this->CheckSession();
 
@@ -70,13 +44,7 @@ abstract class ControllerBase implements IController
 
             if (!isset($_SESSION[self::SESSION]) || empty($_SESSION[self::SESSION])) {
 
-                if ($this->Request->TryGetString('r') == 'json') {
-                    WebUtils::JSONAlert(9001, '登录超时');
-                    $this->ResponseEnd();
-                } else {
-                    WebUtils::JSAlert('登录超时', "/index.php/User.Login");
-                    $this->ResponseEnd();
-                }
+                $this->Alert(9001, '登录超时', \WebRouter::GetControllerPath('User', 'Login'));
 
             }
 
@@ -84,49 +52,10 @@ abstract class ControllerBase implements IController
         }
     }
 
-    public abstract function Execute();
-
-    public function ResponseEnd()
+    public function SavekSession()
     {
-        exit;
-    }
+        $_SESSION[self::SESSION] = $this->UserInfo;
 
-    public function JSAlert($msg, $redirect = WebUtils::REDIRECT_GOBACK, $isTop = false)
-    {
-
-        WebUtils::JSAlert($msg, $redirect, $isTop);
-
-        $this->ResponseEnd();
-    }
-
-    public function JSONAlert($Result = 0, $msg = '', $data = array())
-    {
-        WebUtils::JSONAlert($Result, $msg, $data);
-
-        $this->ResponseEnd();
-    }
-
-
-    public function GetDoActionName()
-    {
-        if (!$this->Request->HasKey('do') || $this->Request->IsEmpty('do')) return false;
-
-        return $this->Request->TryGetString('do');
-    }
-
-    public function ProcessDoAction()
-    {
-
-        $Action = $this->GetDoActionName();
-
-        $method = "do" . $Action;
-
-        if (!method_exists($this, $method)) {
-
-            return;
-        }
-
-        return call_user_func_array(array($this, $method), array());
     }
 
 
