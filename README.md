@@ -7,7 +7,7 @@ Please Read Wiki
 Folders Info:
 
     /data  Config & Log Folder
-    /include Core Code Place Folder
+    /FrameworkInclude Core Code Place Folder
 
     /WebDemo  Website Demo
     /WXDemo  Wechat MP Interface Demo
